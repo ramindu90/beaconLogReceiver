@@ -83,7 +83,7 @@ public class GMailSender extends javax.mail.Authenticator {
             FileFilter fileFilter = new WildcardFileFilter("beaconlog*");
             File[] files = dir.listFiles(fileFilter);
             for (File file : files) {
-                SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy-HH");
+                SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy-HH-mm");
                 currentlyUsedLogfile = "beaconlog-"+ deviceId + "-" + format.format(new Date()) + ".log";
                 if(!currentlyUsedLogfile.equals(file.getName())) {
                     addAttachment(multipart, file.getAbsolutePath());

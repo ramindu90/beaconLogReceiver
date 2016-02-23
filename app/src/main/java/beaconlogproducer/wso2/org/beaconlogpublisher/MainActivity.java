@@ -16,6 +16,7 @@ import android.os.RemoteException;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -67,9 +68,11 @@ public class MainActivity extends ActionBarActivity implements BeaconConsumer, G
     TextView senderEmailText;
     TextView senderPasswordText;
     TextView recipientEmailText;
+    Button startButton;
+    Button endButton;
 
     String senderEmail = "beaconlog.publisher@gmail.com";;
-    String senderPassword = "xxxxxx";;
+    String senderPassword = "qwertypo123";
     String recepientEmail= "beaconlog.publisher@gmail.com";;
 
     Context context = this;
@@ -105,6 +108,9 @@ public class MainActivity extends ActionBarActivity implements BeaconConsumer, G
      * @param view
      */
     public void startCollectingData(View view) {
+
+        endButton.setEnabled(true);
+        startButton.setEnabled(false);
 
         // beacon data
         beaconManager = BeaconManager.getInstanceForApplication(this);
@@ -148,6 +154,8 @@ public class MainActivity extends ActionBarActivity implements BeaconConsumer, G
         beaconManager.unbind(this);
         fileWriteScheduler.shutdown();
         emailScheduler.shutdown();
+        startButton.setEnabled(true);
+        endButton.setEnabled(false);
     }
 
     /**
@@ -160,6 +168,10 @@ public class MainActivity extends ActionBarActivity implements BeaconConsumer, G
         senderEmailText.setText(senderEmail);
         senderPasswordText.setText(senderPassword);
         recipientEmailText.setText(recepientEmail);
+        startButton = (Button)findViewById(R.id.startButton);
+        endButton = (Button)findViewById(R.id.endButton);
+        endButton.setEnabled(false);
+        startButton.setEnabled(true);
     }
 
     /**
