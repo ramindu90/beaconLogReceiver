@@ -182,6 +182,9 @@ public class MainActivity extends ActionBarActivity implements BeaconConsumer, G
         senderEmail = senderEmailText.getText().toString();
         senderPassword = senderPasswordText.getText().toString();
         recepientEmail = recipientEmailText.getText().toString();
+
+//        senderEmail.setVisibility(View.GONE);
+
     }
 
     /**
