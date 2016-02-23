@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="libthrift_0.7.0.wso2v2">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../310wso2Server/src/main/resources/libthrift_0.7.0.wso2v2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
