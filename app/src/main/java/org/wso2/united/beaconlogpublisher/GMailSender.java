@@ -69,7 +69,7 @@ public class GMailSender extends javax.mail.Authenticator {
      * @param recipients
      * @throws Exception
      */
-    public void sendMail(String subject, String body, String sender, String recipients, String deviceId) throws Exception {
+    public void sendMail(String subject, String body, String sender, String recipients, String deviceId,boolean isStopped) throws Exception {
         try{
             String currentlyUsedLogfile = null;
             boolean attachmentsAvailable = false;
@@ -82,13 +82,26 @@ public class GMailSender extends javax.mail.Authenticator {
             File dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath());
             FileFilter fileFilter = new WildcardFileFilter("beaconlog*");
             File[] files = dir.listFiles(fileFilter);
-            for (File file : files) {
-                SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy-HH-mm");
-                currentlyUsedLogfile = "beaconlog-"+ deviceId + "-" + format.format(new Date()) + ".log";
-                if(!currentlyUsedLogfile.equals(file.getName())) {
-                    addAttachment(multipart, file.getAbsolutePath());
-                    body += "\n" + file.getAbsolutePath();
-                    attachmentsAvailable = true;
+
+            if(isStopped){
+                for (File file : files) {
+                    SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy-HH-mm");
+
+                        addAttachment(multipart, file.getAbsolutePath());
+                        body += "\n" + file.getAbsolutePath();
+                        attachmentsAvailable = true;
+                }
+            }
+            else {
+                for (File file : files) {
+                    SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy-HH-mm");
+                    currentlyUsedLogfile = "beaconlog-" + deviceId + "-" + format.format(new Date()) + ".log";
+
+                   if (!currentlyUsedLogfile.equals(file.getName())) {
+                        addAttachment(multipart, file.getAbsolutePath());
+                        body += "\n" + file.getAbsolutePath();
+                        attachmentsAvailable = true;
+                    }
                 }
             }
 

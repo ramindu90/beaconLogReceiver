@@ -137,7 +137,7 @@ public class MainActivity extends ActionBarActivity implements BeaconConsumer, G
             @Override
             public void run() {
                 try {
-                    sendEmailAttachment();
+                    sendEmailAttachment(false);
                 } catch (Throwable e) {
                     Log.e("Error : send email", e.getMessage());
                 }
@@ -156,6 +156,7 @@ public class MainActivity extends ActionBarActivity implements BeaconConsumer, G
         emailScheduler.shutdown();
         startButton.setEnabled(true);
         endButton.setEnabled(false);
+        sendEmailAttachment(true);
     }
 
     /**
@@ -182,17 +183,20 @@ public class MainActivity extends ActionBarActivity implements BeaconConsumer, G
         senderEmail = senderEmailText.getText().toString();
         senderPassword = senderPasswordText.getText().toString();
         recepientEmail = recipientEmailText.getText().toString();
+
+//        senderEmail.setVisibility(View.GONE);
+
     }
 
     /**
      * Send the mail containing the attachments
      */
-    private void sendEmailAttachment() {
+    private void sendEmailAttachment(boolean isStopped) {
         try {
             GMailSender sender = new GMailSender(senderEmail, senderPassword);
             String subject = "Beacon/location Logs";
             String body = "Please find the attached beacon and location log files. \n";
-            sender.sendMail(subject, body, senderEmail, recepientEmail, deviceId);
+            sender.sendMail(subject, body, senderEmail, recepientEmail, deviceId,isStopped);
         } catch (Exception e) {
             Log.e("Error sending mail", e.getMessage());
         }
